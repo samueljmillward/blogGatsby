@@ -1,4 +1,10 @@
-var plugins = []
+var plugins = [{
+      plugin: require('/Users/samueljmillward/Documents/GitHub/gatsby-tutorial/gatsby/node_modules/gatsby-plugin-styled-components/gatsby-ssr'),
+      options: {"plugins":[]},
+    },{
+      plugin: require('/Users/samueljmillward/Documents/GitHub/gatsby-tutorial/gatsby/node_modules/gatsby-source-sanity/gatsby-ssr'),
+      options: {"plugins":[],"projectId":"4ubew0ga","dataset":"production","watchMode":true,"token":"skEMcOxwnnm8bM1b2cA9BHceQL9FiIMRqLrYlsdjhPBFzYuiGJVXGSFbfsXRvzX7TBoPUyNVgsJECdqiTIcf2SjQp9tg8N4mHwKQHCf2cXR8tkZL3ZWYDT2NGuSEJORIPUBW7PH3QLqtSJTSeedelsXPY0Ge49pCNwUzh4AIqMebgiX8F5za"},
+    }]
 // During bootstrap, we write requires at top of this file which looks like:
 // var plugins = [
 //   {
