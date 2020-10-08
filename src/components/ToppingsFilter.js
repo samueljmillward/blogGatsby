@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useStaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
+import Layout from './Layout';
 
 const ToppingsStyles = styled.div`
   display: flex;
@@ -13,14 +14,14 @@ const ToppingsStyles = styled.div`
     grid-gap: 0 1rem;
     align-items: center;
     padding: 5px;
-    background var(--grey);
+    background: var(--grey);
     border-radius: 2px;
     .count {
-        background: white;
-        padding: 2px 5px;
+      background: white;
+      padding: 2px 5px;
     }
-    .active {
-        background: var(--yellow);
+    &[aria-current='page'] {
+      background: var(--yellow);
     }
   }
 `;
@@ -48,7 +49,7 @@ function countPizzasInToppings(pizzas) {
   return sortedToppings;
 }
 
-export default function ToppingsFilter() {
+export default function ToppingsFilter(activeTopping) {
   const { toppings, pizzas } = useStaticQuery(graphql`
     query {
       toppings: allSanityTopping {
@@ -72,13 +73,23 @@ export default function ToppingsFilter() {
   const toppingsWithCounts = countPizzasInToppings(pizzas.nodes);
   console.log(toppingsWithCounts);
   return (
-    <ToppingsStyles>
-      {toppingsWithCounts.map((topping) => (
-        <Link to={`/topping/${topping.name}`} key={topping.id}>
-          <span className="name">{topping.name}</span>
-          <span className="name">{topping.count}</span>
+    <Layout>
+      <ToppingsStyles>
+        <Link to="/pizzas">
+          <span className="name">All</span>
+          <span className="count">{pizzas.nodes.length}</span>
         </Link>
-      ))}
-    </ToppingsStyles>
+        {toppingsWithCounts.map((topping) => (
+          <Link
+            to={`/topping/${topping.name}`}
+            key={topping.id}
+            className={topping.name === activeTopping ? 'active' : ''}
+          >
+            <span className="name">{topping.name}</span>
+            <span className="count">{topping.count}</span>
+          </Link>
+        ))}
+      </ToppingsStyles>
+    </Layout>
   );
 }
