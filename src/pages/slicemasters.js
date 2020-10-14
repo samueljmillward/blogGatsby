@@ -5,6 +5,7 @@ import Img from 'gatsby-image';
 import styled from 'styled-components';
 import Layout from '../components/Layout';
 import Pagination from '../components/Pagination';
+import SEO from '../components/SEO';
 
 const SlicemasterGrid = styled.div`
   display: grid;
@@ -43,6 +44,7 @@ export default function SlicemastersPage({ data, pageContext }) {
   const slicemasters = data.slicemasters.nodes;
   return (
     <Layout>
+      <SEO title={`Slicemasters - Page ${pageContext.currentPage || 1}`} />
       <SlicemasterGrid>
         {slicemasters.map((person) => (
           <SlicemasterStyles>
