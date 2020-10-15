@@ -11,6 +11,7 @@ import useForm from '../utils/useForm';
 import calculatePizzaPrice from '../utils/calculatePizzaPrice';
 import formatMoney from '../utils/formatMoney';
 import usePizza from '../utils/usePizza';
+import calculateOrderTotal from '../utils/calculateOrderTotal';
 
 export default function OrderPage({ data }) {
   const pizzas = data.pizzas.nodes;
@@ -86,6 +87,12 @@ export default function OrderPage({ data }) {
             removeFromOrder={removeFromOrder}
             pizzas={pizzas}
           />
+        </fieldset>
+        <fieldset>
+          <h3>
+            Your Total is {formatMoney(calculateOrderTotal(order, pizzas))}
+          </h3>
+          <button type="submit">Order Ahead</button>
         </fieldset>
       </OrderStyles>
     </Layout>
