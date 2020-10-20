@@ -39,8 +39,13 @@ function wait(ms = 0) {
 }
 
 exports.handler = async (event, context) => {
-  await wait(5000);
   const body = JSON.parse(event.body);
+  if (body.mapleSyrup) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: 'Boop beep bop zzzzstt good bye' }),
+    };
+  }
   const requiredFields = ['email', 'name', 'order'];
 
   for (const field of requiredFields) {
@@ -55,13 +60,21 @@ exports.handler = async (event, context) => {
     }
   }
 
+  if (!body.order.length) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: `Why would you order nothing?!`,
+      }),
+    };
+  }
+
   const info = await transporter.sendMail({
     from: "Slick's Slices <slick@example.com>",
     to: `${body.name} <${body.email}>, orders@example.com`,
     subject: 'New order!',
     html: generateOrderEmail({ order: body.order, total: body.total }),
   });
-  console.log(info);
   return {
     statusCode: 200,
     body: JSON.stringify({ message: 'Success' }),
